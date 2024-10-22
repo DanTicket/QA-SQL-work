@@ -1,0 +1,78 @@
+use movielens;
+
+-- Q1
+select title, release_date from movies where release_date >= '1983-01-01' and release_date < '1994-01-01'
+order by release_date desc;
+
+-- Q2
+select * from ratings;
+
+(select rating from ratings inner join movies on ratings.movie_id = movies.id where movies.title = (select distinct title from movies limit 1));
+
+select title from movies inner join ratings on movies.id = ratings.movie_id order by ratings.rating;
+
+select AVG(ratings.rating) as avrat, movies.title from ratings inner join movies on ratings.movie_id = movies.id group by movies.title order by avg(ratings.rating)
+
+
+
+select min(avrat) from (select AVG(ratings.rating) as avrat from ratings inner join movies on ratings.movie_id = movies.id group by movies.title order by avg(ratings.rating));
+
+
+select * from movies inner join ratings where ratings.ra
+
+
+SELECT AVG(ratings.rating) AS avrat, movies.title 
+FROM ratings 
+INNER JOIN movies ON ratings.movie_id = movies.id 
+GROUP BY movies.title;
+
+
+SELECT title
+FROM (
+    SELECT AVG(ratings.rating) AS avrat, movies.title 
+    FROM ratings 
+    INNER JOIN movies ON ratings.movie_id = movies.id 
+    WHERE avrat = (
+    SELECT MIN(avrattwo) 
+		FROM (
+			SELECT AVG(ratings.rating) AS avrattwo, movies.title 
+			FROM ratings 
+			INNER JOIN movies ON ratings.movie_id = movies.id 
+			GROUP BY movies.title
+		) AS subquerytwo
+    )
+    GROUP BY movies.title
+) AS subqueryone;
+
+
+
+SELECT title, avrat
+FROM (
+    SELECT AVG(ratings.rating) AS avrat, movies.title 
+    FROM ratings 
+    INNER JOIN movies ON ratings.movie_id = movies.id 
+    GROUP BY movies.title
+) AS subqueryone
+WHERE avrat = (
+    SELECT MIN(avrattwo) 
+    FROM (
+        SELECT AVG(ratings.rating) AS avrattwo 
+        FROM ratings 
+        INNER JOIN movies ON ratings.movie_id = movies.id 
+        GROUP BY movies.title
+    ) AS subquerytwo
+);
+
+
+
+-- Q5 
+select title from movies inner join genres_movies on movies.id = genres_movies.movie_id group by movies.id;
+
+
+SELECT genre_id, COUNT(movie_id) AS total_movies
+FROM genres_movies
+INNER JOIN genres
+GROUP BY genre_id
+ORDER BY total_movies ASC;
+
+
