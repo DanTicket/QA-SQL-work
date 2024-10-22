@@ -1,0 +1,102 @@
+use world;
+
+select * from city;
+
+SELECT COUNT(*) AS city_count
+FROM city
+WHERE CountryCode = 'USA';
+
+SELECT population, LifeExpectancy
+FROM country
+WHERE Name = 'Argentina';
+
+SELECT Name, LifeExpectancy
+FROM country
+WHERE LifeExpectancy IS NOT NULL
+ORDER BY LifeExpectancy DESC
+LIMIT 1;
+
+SELECT city.Name
+FROM country
+JOIN city ON country.capital = city.ID
+WHERE country.Name = 'Spain';
+
+SELECT DISTINCT countrylanguage.Language
+FROM country
+JOIN countrylanguage ON country.CountryCode = countrylanguage.CountryCode
+JOIN countrylanguage ON countrylanguage.language_id = countrylanguage.language_id
+WHERE country.region = 'Southeast Asia';
+
+SELECT Name
+FROM city
+WHERE Name LIKE 'F%'
+LIMIT 25;
+
+SELECT COUNT(*) AS city_count
+FROM city
+WHERE CountryCode = 'CHN';  -- Assuming 'CHN' is the CountryCode for China
+
+SELECT Name, population
+FROM country
+WHERE population IS NOT NULL AND population > 0
+ORDER BY population ASC
+LIMIT 1;
+
+SELECT COUNT(*) AS country_count
+FROM country;
+
+SELECT Name, area
+FROM country
+ORDER BY area DESC
+LIMIT 10;
+
+SELECT Name, population
+FROM city
+WHERE CountryCode = 'JPN'  -- Assuming 'JPN' is the CountryCode for Japan
+ORDER BY population DESC
+LIMIT 5;
+
+SELECT Name, CountryCode
+FROM country
+WHERE head_of_state = 'Elizabeth II';
+
+SELECT Name, (population / area) AS population_area_ratio
+FROM country
+WHERE area > 0 AND population > 0
+ORDER BY population_area_ratio ASC
+LIMIT 10;
+
+SELECT DISTINCT Language
+FROM countrylanguage;
+
+SELECT Name, gnp
+FROM country
+ORDER BY gnp DESC
+LIMIT 10;
+
+SELECT country.Name, COUNT(countrylanguage.language_id) AS num_languages
+FROM country
+JOIN countrylanguage ON country.CountryCode = countrylanguage.CountryCode
+GROUP BY country.Name
+ORDER BY num_languages DESC
+LIMIT 10;
+
+SELECT Name
+FROM country
+WHERE german_speakers_percentage > 50;  -- Assuming you have this percentage in your dataset
+
+SELECT Name, LifeExpectancy
+FROM country
+WHERE LifeExpectancy IS NOT NULL AND LifeExpectancy > 0
+ORDER BY LifeExpectancy ASC
+LIMIT 1;
+
+SELECT government_form, COUNT(*) AS count
+FROM country
+GROUP BY government_form
+ORDER BY count DESC
+LIMIT 3;
+
+SELECT COUNT(*) AS independent_country_count
+FROM country
+WHERE independence_date IS NOT NULL; 
