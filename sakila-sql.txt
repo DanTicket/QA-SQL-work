@@ -1,6 +1,8 @@
 
 SELECT * FROM actor;
 
+SELECT * FROM actor;
+
 SELECT surname FROM actor WHERE firstname = 'John';
 
 SELECT * FROM actor WHERE surname = 'Neeson';
